@@ -10,3 +10,7 @@ download the latest version from the [release section](https://github.com/kanedo
 ### 2017-03-08 Version 1.0
 
 * initial release
+
+### 2017-03-08 Version 1.1
+
+* added second action which copies a named link list instead of a list of references
