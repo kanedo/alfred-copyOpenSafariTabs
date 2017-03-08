@@ -31,6 +31,42 @@
 				<false/>
 			</dict>
 		</array>
+		<key>9DB3D3FC-C429-40C9-AFCC-887F45EFED14</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9BE5C0DF-DECF-4E3E-974A-A3C82167C8FA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>01D2F5F6-A940-4973-AE23-BC3E58FE105D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D3D00529-F541-43D1-B420-7FC128A41FED</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9DB3D3FC-C429-40C9-AFCC-887F45EFED14</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>E9F0FEC9-7719-4849-B18C-5C10A93B7427</key>
 		<array>
 			<dict>
@@ -178,6 +214,90 @@ function run(argv) {
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>linklist</string>
+				<key>subtext</key>
+				<string>formatted as titled links</string>
+				<key>text</key>
+				<string>Safari Tabs as linklist</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D3D00529-F541-43D1-B420-7FC128A41FED</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>68</integer>
+				<key>script</key>
+				<string>function getPinnedTabs() {
+		var _safariProc = Application("System Events").processes["Safari"];
+		var _window = _safariProc.windows[0];
+		var _tabGroup = _window.tabGroups[0];
+
+		var _result = [];
+		for (var i = 0; i &lt; _tabGroup.radioButtons.length; i++) {
+			var _radioButton = _tabGroup.radioButtons[i];
+			if (_radioButton.roleDescription() === "pinned tab") {
+				_result.push(_radioButton.description());
+			}
+		};
+
+		return _result;
+	}
+
+	function processTabs() {
+		var _result = [];
+		var _pinnedTabs = getPinnedTabs();
+		var _safari = Application("Safari");
+		var _window = _safari.windows[0];
+		var _currentTabName = _window.currentTab().name();
+		var footnoteIndex = 1;
+		for (var i = _window.tabs.length-1; i &gt;= 0; i--) {
+			var _tab = _window.tabs[i];
+			var _tabName = _tab.name();
+			if (_tabName !== _currentTabName &amp;&amp;
+				_pinnedTabs.findIndex(function(item) {
+					return item == _tabName;
+				}) &lt; 0) {
+				_result.push("["+_tabName+"](" + _tab.url()+")")
+			};
+		}
+		return _result;
+		
+	}
+
+function run(argv) {
+  var query = argv[0];
+  return processTabs().join("\n");
+}</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>7</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>9DB3D3FC-C429-40C9-AFCC-887F45EFED14</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -203,6 +323,20 @@ function run(argv) {
 			<integer>630</integer>
 			<key>ypos</key>
 			<integer>60</integer>
+		</dict>
+		<key>9DB3D3FC-C429-40C9-AFCC-887F45EFED14</key>
+		<dict>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>260</integer>
+		</dict>
+		<key>D3D00529-F541-43D1-B420-7FC128A41FED</key>
+		<dict>
+			<key>xpos</key>
+			<integer>110</integer>
+			<key>ypos</key>
+			<integer>260</integer>
 		</dict>
 		<key>E9F0FEC9-7719-4849-B18C-5C10A93B7427</key>
 		<dict>
